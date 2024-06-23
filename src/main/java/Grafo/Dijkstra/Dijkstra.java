@@ -37,6 +37,7 @@ public class Dijkstra {
 
         return distancias;
     }
+
     public static int calcularDistanciaTotal(Grafo grafo, List<String> secuencia) {
         int distanciaTotal = 0;
         for (int i = 0; i < secuencia.size() - 1; i++) {

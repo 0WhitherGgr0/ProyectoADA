@@ -27,6 +27,25 @@ public class Grafo {
         grafo.get(destino).put(origen, peso); // Considerando que el grafo es no dirigido
     }
 
+    public void eliminarVertice(String vertice) {
+        if (!grafo.containsKey(vertice)) {
+            throw new IllegalArgumentException("Vértice no existente");
+        }
+        grafo.remove(vertice);
+        for (Map<String, Integer> adyacentes : grafo.values()) {
+            adyacentes.remove(vertice);
+        }
+    }
+
+    public void eliminarArista(String origen, String destino) {
+        if (grafo.containsKey(origen)) {
+            grafo.get(origen).remove(destino);
+        }
+        if (grafo.containsKey(destino)) {
+            grafo.get(destino).remove(origen);
+        }
+    }
+
     public Map<String, Integer> obtenerAdyacentes(String vertice) {
         return grafo.getOrDefault(vertice, new HashMap<>());
     }
