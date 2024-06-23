@@ -8,6 +8,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
 public class VisualizadorGrafo {
 
     public static void main(String[] args) {
@@ -68,12 +77,20 @@ public class VisualizadorGrafo {
         // Crear la ventana de visualización
         JFrame frame = new JFrame("Visualización de Grafo y Ruta Mínima");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1600, 800);
         frame.setLayout(new BorderLayout());
 
-        // Panel personalizado para dibujar el grafo y la ruta mínima
-        GrafoPanel panel = new GrafoPanel(grafo, sequence);
-        frame.add(panel, BorderLayout.CENTER);
+        // Panel personalizado para dibujar el grafo completo
+        GrafoPanel grafoPanel = new GrafoPanel(grafo, List.of()); // Lista vacía para no dibujar recorrido
+
+        // Panel personalizado para dibujar solo el recorrido
+        RecorridoPanel recorridoPanel = new RecorridoPanel(grafo, sequence);
+
+        // Crear un JSplitPane para dividir la ventana en dos paneles
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, grafoPanel, recorridoPanel);
+        splitPane.setDividerLocation(800); // Posición inicial del divisor
+
+        frame.add(splitPane, BorderLayout.CENTER);
 
         // Panel para agregar botones de control
         JPanel controlPanel = new JPanel();
@@ -94,7 +111,8 @@ public class VisualizadorGrafo {
             String nodo = JOptionPane.showInputDialog(frame, "Ingrese el nombre del nuevo nodo:");
             if (nodo != null && !nodo.isEmpty()) {
                 grafo.agregarVertice(nodo);
-                panel.repaint();
+                grafoPanel.repaint();
+                recorridoPanel.repaint();
             }
         });
 
@@ -102,11 +120,15 @@ public class VisualizadorGrafo {
             String nodo = JOptionPane.showInputDialog(frame, "Ingrese el nombre del nodo a eliminar:");
             if (nodo != null && !nodo.isEmpty()) {
                 grafo.eliminarVertice(nodo);
-                panel.repaint();
+                grafoPanel.repaint();
+                recorridoPanel.repaint();
             }
         });
 
-        refreshButton.addActionListener(e -> panel.repaint());
+        refreshButton.addActionListener(e -> {
+            grafoPanel.repaint();
+            recorridoPanel.repaint();
+        });
 
         frame.setVisible(true);
     }
