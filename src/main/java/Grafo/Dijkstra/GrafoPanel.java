@@ -10,19 +10,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Panel personalizado para visualizar un grafo utilizando gráficos en Java Swing.
+ */
 class GrafoPanel extends JPanel {
-    private Grafo grafo;
-    private List<String> sequence;
-    private Map<String, Integer> vertexPositions;
+
+    private Grafo grafo; // Grafo que se va a visualizar en el panel
+    private List<String> sequence; // Secuencia de vértices que representan la ruta mínima
+    private Map<String, Integer> vertexPositions; // Mapa para almacenar las posiciones de los vértices
     private final int radius = 40; // Radio del círculo del nodo
     private final int padding = 50; // Espacio de padding del panel
 
+    /**
+     * Constructor del panel de grafo.
+     * @param grafo Grafo a visualizar.
+     * @param sequence Secuencia de vértices que representan la ruta mínima.
+     */
     public GrafoPanel(Grafo grafo, List<String> sequence) {
         this.grafo = grafo;
         this.sequence = sequence;
         this.vertexPositions = new HashMap<>();
     }
 
+    /**
+     * Método sobrescrito para dibujar el grafo en el panel.
+     * @param g Objeto Graphics utilizado para dibujar componentes.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -66,7 +79,7 @@ class GrafoPanel extends JPanel {
             }
         }
 
-        // Dibujar nodos
+        // Dibujar nodos del grafo
         g2d.setColor(Color.RED);
         g2d.setFont(new Font("Arial", Font.BOLD, 16)); // Tamaño de la fuente para los nombres de los vértices
         FontMetrics fm = g2d.getFontMetrics();

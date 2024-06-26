@@ -10,19 +10,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Panel personalizado para visualizar un recorrido específico en un grafo utilizando gráficos en Java Swing.
+ */
 class RecorridoPanel extends JPanel {
-    private Grafo grafo;
-    private List<String> sequence;
-    private Map<String, Integer> vertexPositions;
+
+    private Grafo grafo; // Grafo sobre el cual se visualiza el recorrido
+    private List<String> sequence; // Secuencia de vértices que representan el recorrido
+    private Map<String, Integer> vertexPositions; // Mapa para almacenar las posiciones de los vértices en el panel
     private final int radius = 40; // Radio del círculo del nodo
     private final int padding = 50; // Espacio de padding del panel
 
+    /**
+     * Constructor del panel de recorrido.
+     * @param grafo Grafo sobre el cual se visualiza el recorrido.
+     * @param sequence Secuencia de vértices que representan el recorrido.
+     */
     public RecorridoPanel(Grafo grafo, List<String> sequence) {
         this.grafo = grafo;
         this.sequence = sequence;
         this.vertexPositions = new HashMap<>();
     }
 
+    /**
+     * Método sobrescrito para dibujar el recorrido en el panel.
+     * @param g Objeto Graphics utilizado para dibujar componentes.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,5 +87,14 @@ class RecorridoPanel extends JPanel {
             g2d.drawString(vertice, puntos[vertexIndex].x - textWidth / 2, puntos[vertexIndex].y + textHeight / 4);
             g2d.setColor(Color.RED);
         }
+    }
+
+    /**
+     * Método para actualizar el recorrido visualizado en el panel.
+     * @param nuevoRecorrido Nueva secuencia de vértices que representa el nuevo recorrido.
+     */
+    public void actualizarRecorrido(List<String> nuevoRecorrido) {
+        this.sequence = nuevoRecorrido;
+        repaint(); // Vuelve a dibujar el panel con el nuevo recorrido
     }
 }
